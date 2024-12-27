@@ -1,0 +1,17 @@
+{
+  "name": "three-demo",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.6",
+    "vite-plugin-static-copy": "^2.2.0"
+  },
+  "dependencies": {
+    "three": "^0.171.0",
+    "three-stdlib": "^2.35.2"
+  }
+}
