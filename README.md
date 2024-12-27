@@ -4,9 +4,7 @@ Welcome to my portfolio website! This is where I showcase my skills, projects, a
 
 ## Setup Instructions
 
-To get the website running locally, follow these steps:
-
-**Clone the Repository:**
+To get the website running locally
    ```
    git clone <this-repo>
    npm install
