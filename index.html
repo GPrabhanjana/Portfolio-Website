@@ -4,132 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G Prabhanjana</title>
+  <meta name="description" content="G Prabhanjana. Statistics and Computer Science. ML, data engineering, GIS." />
   <style>
+    /* ============================================================
+       THEME TOKENS
+       ============================================================ */
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --cyan: #00E6F6;
+      --cyan-soft: #cff8ff;
+      --dim: rgba(255, 255, 255, 0.55);
+      --line: rgba(255, 255, 255, 0.18);
+      --panel: rgba(255, 255, 255, 0.03);
+      --panel-strong: rgba(0, 0, 0, 0.55);
+    }
+
+    /* ============================================================
+       LOADING SCREEN
+       ============================================================ */
     #loading-screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: #000000;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
       transition: opacity 0.5s;
-  }
-  
-  .loading-contents {
+    }
+
+    .loading-contents {
       text-align: center;
       color: white;
       font-family: 'Helvetica Neue', sans-serif;
-      width: 300px;
-  }
-  
-  .loading-text {
-      font-size: 2rem;
+      width: 15.6vw;
+    }
+
+    .loading-text {
+      font-size: 2vw;
       letter-spacing: 0.5em;
-      margin-right: -0.5em; /* Compensate for the last letter spacing */
-      margin-bottom: 2rem;
+      margin-right: -0.5em;
+      margin-bottom: 2vw;
       font-weight: bold;
       animation: pulse 2s infinite;
-  }
-  
-  .progress-container {
+    }
+
+    .progress-container {
       width: 100%;
-      height: 4px;
+      height: 0.21vw;
       background: #333;
-      border-radius: 2px;
-      margin: 1rem 0;
+      border-radius: 0.1vw;
+      margin: 1vw 0;
       overflow: hidden;
-  }
-  
-  .progress-bar {
+    }
+
+    .progress-bar {
       width: 0%;
       height: 100%;
       background: linear-gradient(90deg, #ababab, #ffffff);
       transition: width 0.3s ease;
-      border-radius: 2px;
+      border-radius: 0.1vw;
       position: relative;
-  }
-  
-  .progress-bar::after {
+    }
+
+    .progress-bar::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, 
-          transparent, 
-          rgba(255, 255, 255, 0.3), 
-          transparent);
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       animation: shimmer 1.5s infinite;
-  }
-  
-  .loading-progress {
-      font-size: 1rem;
-      margin-top: 1rem;
-      color: #888;
-  }
-  
-  @keyframes pulse {
-      0%, 100% {
-          opacity: 1;
-      }
-      50% {
-          opacity: 0.5;
-      }
-  }
-  
-  @keyframes shimmer {
-      0% {
-          transform: translateX(-100%);
-      }
-      100% {
-          transform: translateX(100%);
-      }
-  }
-    /* General Styles */
+    }
+
+    /* ============================================================
+       BASE
+       ============================================================ */
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      color: #ffffff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: var(--text);
       overflow-x: hidden;
+      background-color: var(--bg);
     }
-    
-    /* Updated Text Styles - All text follows h2 font style */
-    p, .project-info p, .contact-message, h2 {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin: 1.5rem 0;
-      transition: all 0.3s ease;
-      cursor: default;
-    }
-    
-    .section-title {
-      font-size: 4rem;
-      font-weight: bold;
-      line-height: 1.2;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-      position: relative;
-      padding-bottom: 1rem;
-      transition: all 0.3s ease;
-      cursor: default;
-    }
-    
-    p:not(.button), 
-    .project-info p:not(.button), 
-    .contact-message:not(.button), 
-    h2:not(.button),
-    .section-title {
-      font-family: 'Helvetica Neue', sans-serif;
-    }S
 
-    /* Letter span styling */
+    canvas {
+      position: fixed;
+      top: 0;
+      /* Centered rather than left-anchored: in portrait the renderer
+         draws at landscape width (see the inline script before the
+         module script), so the canvas is wider than the screen and
+         must crop equally on both sides. In landscape this is
+         visually identical to left: 0. */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    ::selection {
+      background: var(--cyan);
+      color: #000;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY
+       ============================================================ */
+    p, h2, h3, .contact-message {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 1.25vw;
+      line-height: 1.8;
+      margin: 1.5vw 0;
+      transition: all 0.3s ease;
+      cursor: default;
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      hyphens: none;
+    }
+
+    .hl {
+      color: #ff5f5f;
+      text-shadow: 0 0 10px #ff6969;
+    }
+
+    .hl-cyan {
+      color: var(--cyan-soft);
+      text-shadow: 0 0 10px rgba(0, 230, 246, 0.7);
+    }
+
+    .word-span {
+      white-space: nowrap;
+      display: inline-block;
+    }
+
     .letter-span {
       display: inline-block;
       transition: transform 0.2s ease;
@@ -137,277 +147,1079 @@
     }
 
     .letter-span.active {
-      color: #cff8ff;
-      text-shadow: 0 0 10px rgb(183, 204, 255);
-      font-size: calc(1.03em);
+      color: var(--cyan-soft);
+      text-shadow: 0 0 0.52vw rgb(183, 204, 255);
+      transform: scale(1.03);
     }
-    
-    
-    /* Rest of the existing styles remain the same */
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-    
-    #sphere-section {
-      height: 150vh;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+
+    .section-title {
+      font-size: 4vw;
+      font-weight: bold;
+      line-height: 1.2;
+      text-transform: uppercase;
+      margin-bottom: 2vw;
+      text-shadow: 0 0 0.52vw rgba(255, 255, 255, 0.8);
       position: relative;
-    }
-    
-    #sphere-section2 {
-      height: 117vh;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-    
-    .full-screen {
-      min-height: 100vh;
-      width: 66%;
-      margin: 200vh auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      text-align: center;
-      border-radius: 10px;
-    }
-    
-    .full-screen:first-of-type {
-      background: none;
-      margin: 0 auto;
-      height: 150vh;
+      padding-bottom: 1vw;
+      transition: all 0.3s ease;
+      cursor: default;
+      white-space: normal;
     }
 
-    #contact-section {
-      padding: 2rem 0; /* Reduced from 50vh to 20vh */
-    }
-
-    #projecs-section{
-      padding: 6rem 0; 
-    }
-
-    #about-section {
-      padding: 10rem 0;
-    }
-    
     .section-title::after {
       content: '';
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 200px;
-      height: 2px;
+      width: 10.4vw;
+      height: 0.104vw;
       background: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 0.52vw rgba(255, 255, 255, 0.8);
     }
-    
+
+    .section-sub {
+      font-size: 1.04vw;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin: 0 0 3vw 0;
+    }
+
+    /* ============================================================
+       SECTION LAYOUT
+       ============================================================ */
+    .full-screen {
+      min-height: 100vh;
+      width: 66%;
+      margin: 0 auto;
+      padding: 5.2vw 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    #sphere-section {
+      height: 120vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    #sphere-section2 {
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    #about-section,
+    #experience-section,
+    #projects-section {
+      margin-top: 30vh;
+    }
+
+    #contact-section {
+      margin-top: 30vh;
+      margin-bottom: 30vh;
+    }
+
     .centered-box {
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 800px;
-      width: 90%;
-    }
-    
-    /* Projects Grid Layout */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 2rem;
+      padding: 2vw;
+      border-radius: 0.52vw;
+      max-width: 60vw;
       width: 100%;
-      padding: 2rem;
+      margin: 0 auto;
     }
-    
-    .project-info {
+
+    /* Darker panel behind section content (same look as the project
+       tiles) for readability — static, no hover effect. Projects is
+       excluded since its tiles already provide their own background. */
+    #about-section .centered-box,
+    #experience-section .centered-box,
+    #contact-section .centered-box {
+      background: rgba(6, 9, 11, 0.78);
+      border: 0.052vw solid var(--line);
+    }
+
+    /* ============================================================
+       SCROLL REVEAL (opacity + transform only, page height is
+       never affected, so the Three.js scroll mapping stays intact)
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(2.5vw);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+
+    /* ============================================================
+       BUTTONS, corner-bracket style to match the glow aesthetic
+       ============================================================ */
+    .btn {
+      position: relative;
+      display: inline-block;
+      padding: 0.9vw 2.2vw;
+      font-size: 1vw;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      background: var(--panel);
+      border: 0.052vw solid var(--line);
+      cursor: pointer;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, background 0.3s ease;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .btn::before,
+    .btn::after {
+      content: '';
+      position: absolute;
+      width: 0.8vw;
+      height: 0.8vw;
+      border-color: var(--cyan);
+      border-style: solid;
+      transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+      opacity: 0.9;
+    }
+
+    .btn::before {
+      top: -0.052vw;
+      left: -0.052vw;
+      border-width: 0.104vw 0 0 0.104vw;
+    }
+
+    .btn::after {
+      bottom: -0.052vw;
+      right: -0.052vw;
+      border-width: 0 0.104vw 0.104vw 0;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      border-color: rgba(0, 230, 246, 0.7);
+      box-shadow: 0 0 1vw rgba(0, 230, 246, 0.35), inset 0 0 1vw rgba(0, 230, 246, 0.08);
+      color: var(--cyan-soft);
+    }
+
+    .btn:hover::before,
+    .btn:hover::after,
+    .btn:focus-visible::before,
+    .btn:focus-visible::after {
+      width: 1.4vw;
+      height: 1.4vw;
+    }
+
+    .btn:focus-visible {
+      outline: none;
+    }
+
+    /* ============================================================
+       NAVIGATION (hamburger stays put, lines morph into an X)
+       ============================================================ */
+    .nav {
+      position: fixed;
+      width: 16vw;
+      min-width: 220px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(4px);
+      padding: 5rem 1.2rem 1.2rem;
+      border-right: 1px solid var(--line);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateX(-100%);
+    }
+
+    .nav.open {
+      transform: translateX(0);
+    }
+
+    .nav a {
+      display: block;
+      padding: 0.7rem 0.8rem;
+      color: #ffffff;
+      text-decoration: none;
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-left: 2px solid transparent;
+      transition: background 0.3s, color 0.3s, border-color 0.3s, text-shadow 0.3s;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--cyan-soft);
+      border-left-color: var(--cyan);
+      text-shadow: 0 0 0.4rem rgba(0, 230, 246, 0.6);
+      outline: none;
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 1.1rem;
+      left: 1.1rem;
+      width: 2.6rem;
+      height: 2.6rem;
+      padding: 0.65rem 0.55rem;
+      z-index: 101;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--line);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hamburger:hover,
+    .hamburger:focus-visible {
+      border-color: rgba(0, 230, 246, 0.7);
+      box-shadow: 0 0 0.6rem rgba(0, 230, 246, 0.35);
+      outline: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #ffffff;
+      transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+      transform-origin: center;
+    }
+
+    .hamburger:hover span {
+      background-color: var(--cyan);
+      box-shadow: 0 0 4px var(--cyan);
+    }
+
+    /* morph to X in place, no sliding */
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(0.55rem) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-0.55rem) rotate(-45deg);
+    }
+
+    /* ============================================================
+       ABOUT, photo + skills-focused intro
+       ============================================================ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 18vw 1fr;
+      gap: 3.5vw;
+      align-items: center;
+      width: 100%;
       text-align: left;
-      padding-right: 2rem;
     }
-    
-    .project-button {
+
+    .portrait-frame {
+      position: relative;
+      width: 18vw;
+      height: 22vw;
+    }
+
+    .portrait-frame::before {
+      content: '';
+      position: absolute;
+      inset: -0.6vw;
+      border: 0.052vw solid rgba(0, 230, 246, 0.5);
+      clip-path: polygon(8% 0, 100% 0, 100% 92%, 92% 100%, 0 100%, 0 8%);
+      box-shadow: 0 0 1vw rgba(0, 230, 246, 0.25);
+      pointer-events: none;
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      clip-path: polygon(8% 0, 100% 0, 100% 92%, 92% 100%, 0 100%, 0 8%);
+      filter: grayscale(25%) contrast(1.05);
+      transition: filter 0.4s ease;
+    }
+
+    .portrait-frame:hover img {
+      filter: grayscale(0%) contrast(1.05);
+    }
+
+    .about-text p {
+      margin-top: 0;
+    }
+
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6vw;
+      margin-top: 1.5vw;
+    }
+
+    /* ============================================================
+       TAGS
+       ============================================================ */
+    .tag {
+      font-size: 0.83vw;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3vw 0.8vw;
+      border: 0.052vw solid var(--line);
+      color: var(--dim);
+      white-space: nowrap;
+      transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .tag:hover {
+      border-color: var(--cyan);
+      color: var(--cyan-soft);
+      box-shadow: 0 0 0.5vw rgba(0, 230, 246, 0.4);
+    }
+
+    /* ============================================================
+       EXPERIENCE TIMELINE
+       ============================================================ */
+    .timeline {
+      position: relative;
+      width: 100%;
+      text-align: left;
+      padding-left: 3.2vw;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.55vw;
+      top: 0.8vw;
+      bottom: 0.8vw;
+      width: 0.104vw;
+      background: linear-gradient(180deg, var(--cyan), rgba(255, 255, 255, 0.25), rgba(0, 230, 246, 0.4));
+      box-shadow: 0 0 0.52vw rgba(0, 230, 246, 0.6);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3.5vw;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3.05vw;
+      top: 0.55vw;
+      width: 0.9vw;
+      height: 0.9vw;
+      background: #000;
+      border: 0.104vw solid var(--cyan);
+      box-shadow: 0 0 0.6vw var(--cyan), inset 0 0 0.3vw var(--cyan);
+      transform: rotate(45deg);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .timeline-item:hover::before {
+      background: var(--cyan);
+      box-shadow: 0 0 1.2vw var(--cyan);
+    }
+
+    .timeline-date {
+      font-size: 0.94vw;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--cyan-soft);
+      text-shadow: 0 0 0.4vw rgba(0, 230, 246, 0.5);
+      margin: 0 0 0.4vw 0;
+    }
+
+    .timeline-item h3 {
+      font-size: 1.6vw;
+      font-weight: bold;
+      margin: 0 0 0.2vw 0;
+      line-height: 1.3;
+    }
+
+    .timeline-org {
+      font-size: 1.1vw;
+      color: var(--dim);
+      margin: 0 0 1vw 0;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-item p {
+      font-size: 1.15vw;
+      margin: 0.6vw 0;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6vw;
+      margin-top: 1vw;
+    }
+
+    /* ============================================================
+       PROJECT TILES, click to flip for details + direct link
+       ============================================================ */
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5vw;
+      width: 100%;
+    }
+
+    .tile {
+      perspective: 1200px;
+      height: 16vw;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tile-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tile.flipped .tile-inner {
+      transform: rotateY(180deg);
+    }
+
+    .tile-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1.2vw;
+      border: 0.052vw solid var(--line);
+      /* slightly translucent face — backface-visibility: hidden +
+         translateZ keep the opposite face's text from showing
+         through, so only the page background bleeds in */
+      background: rgba(6, 9, 11, 0.78);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tile-front {
+      transform: rotateY(0deg) translateZ(1px);
+    }
+
+    .tile:hover .tile-face,
+    .tile:focus-visible .tile-face {
+      border-color: rgba(0, 230, 246, 0.6);
+      box-shadow: 0 0 1.2vw rgba(0, 230, 246, 0.25);
+    }
+
+    .tile:focus-visible {
+      outline: none;
+    }
+
+    .tile-back {
+      transform: rotateY(180deg) translateZ(1px);
+      justify-content: space-between;
+      padding: 1.3vw 1.2vw;
+    }
+
+    .tile-back-title {
+      font-size: 1.1vw;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan-soft);
+      text-shadow: 0 0 0.5vw rgba(0, 230, 246, 0.5);
+      margin: 0;
+      padding-bottom: 0.6vw;
+      width: 100%;
+      border-bottom: 0.052vw solid rgba(0, 230, 246, 0.25);
+    }
+
+    .tile-desc {
+      font-size: 1vw;
+      line-height: 1.65;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .tile-link {
+      display: inline-block;
+      font-size: 0.85vw;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cyan-soft);
+      text-decoration: none;
+      border: 0.052vw solid rgba(0, 230, 246, 0.45);
+      padding: 0.5vw 1.2vw;
+      transition: text-shadow 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tile-link:hover,
+    .tile-link:focus-visible {
+      text-shadow: 0 0 0.5vw rgba(0, 230, 246, 0.8);
+      border-color: var(--cyan);
+      box-shadow: 0 0 0.8vw rgba(0, 230, 246, 0.35);
+      outline: none;
+    }
+
+    .tile-eyebrow {
+      font-size: 0.78vw;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--cyan-soft);
+      text-shadow: 0 0 0.4vw rgba(0, 230, 246, 0.5);
+      margin: 0 0 0.8vw 0;
+    }
+
+    .tile-title {
+      font-size: 1.45vw;
+      font-weight: bold;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .tile-hint {
+      position: absolute;
+      bottom: 1vw;
+      font-size: 0.73vw;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .resume-row {
+      margin-top: 3vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1vw;
+    }
+
+    .resume-row p {
+      margin: 0;
+      color: var(--dim);
+      font-size: 1.05vw;
+    }
+
+    /* ============================================================
+       CONTACT
+       ============================================================ */
+    .contact-message {
+      max-width: 38vw;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-email {
+      font-size: 1.9vw;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+      text-shadow: 0 0 0.6vw rgba(255, 255, 255, 0.45);
+      border-bottom: 0.052vw solid rgba(0, 230, 246, 0.5);
+      padding-bottom: 0.3vw;
+      transition: color 0.3s ease, text-shadow 0.3s ease, border-color 0.3s ease;
+      word-break: break-all;
+    }
+
+    .contact-email:hover,
+    .contact-email:focus-visible {
+      color: var(--cyan-soft);
+      text-shadow: 0 0 0.8vw rgba(0, 230, 246, 0.8);
+      border-color: var(--cyan);
+      outline: none;
+    }
+
+    .copy-email {
+      margin-top: 1.5vw;
+      background: none;
+      font-size: 0.85vw;
+    }
+
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.2vw;
+      margin-top: 3vw;
+    }
+
+    .social-link {
+      position: relative;
+      width: 3.4vw;
+      height: 3.4vw;
+      min-width: 44px;
+      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 200px;
+      color: var(--text);
+      transition: color 0.3s ease;
     }
 
-    /* Button Styles remain exactly the same */
-    .button {
-      width: 200px;
-      height: 76px;
-      line-height: 78px;
-      font-size: 20px;
-      font-family: 'Bebas Neue', sans-serif;
-      background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
-      border: 0;
-      color: #fff;
-      letter-spacing: 3px;
-      box-shadow: 6px 0px 0px #00E6F6;
-      outline: transparent;
+    /* diamond border echoing the timeline nodes */
+    .social-link::before {
+      content: '';
+      position: absolute;
+      inset: 12%;
+      border: 0.07vw solid var(--line);
+      transform: rotate(45deg);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s ease;
+    }
+
+    .social-link:hover,
+    .social-link:focus-visible {
+      color: var(--cyan-soft);
+      outline: none;
+    }
+
+    .social-link:hover::before,
+    .social-link:focus-visible::before {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0.8vw rgba(0, 230, 246, 0.5);
+      transform: rotate(225deg);
+    }
+
+    .social-link svg {
+      width: 42%;
+      height: 42%;
+      min-width: 18px;
+      min-height: 18px;
+      fill: currentColor;
       position: relative;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
+      z-index: 1;
     }
 
-.button:after {
-  --slice-0: inset(50% 50% 50% 50%);
-  --slice-1: inset(80% -6px 0 0);
-  --slice-2: inset(50% -6px 30% 0);
-  --slice-3: inset(10% -6px 85% 0);
-  --slice-4: inset(40% -6px 43% 0);
-  --slice-5: inset(80% -6px 5% 0);
-  
-  content: 'CLICK ME';
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
-  text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
-  clip-path: var(--slice-0);
-}
+    .social-name {
+      position: absolute;
+      bottom: -1.8vw;
+      font-size: 0.7vw;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--dim);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+    }
 
-.button:hover:after {
-  animation: 1s glitch;
-  animation-timing-function: steps(2, end);
-}
+    .social-link:hover .social-name,
+    .social-link:focus-visible .social-name {
+      opacity: 1;
+    }
 
-@keyframes glitch {
-  0% { clip-path: var(--slice-1); transform: translate(-20px, -10px); }
-  10% { clip-path: var(--slice-3); transform: translate(10px, 10px); }
-  20% { clip-path: var(--slice-1); transform: translate(-10px, 10px); }
-  30% { clip-path: var(--slice-3); transform: translate(0px, 5px); }
-  40% { clip-path: var(--slice-2); transform: translate(-5px, 0px); }
-  50% { clip-path: var(--slice-3); transform: translate(5px, 0px); }
-  60% { clip-path: var(--slice-4); transform: translate(5px, 10px); }
-  70% { clip-path: var(--slice-2); transform: translate(-10px, 10px); }
-  80% { clip-path: var(--slice-5); transform: translate(20px, -10px); }
-  90% { clip-path: var(--slice-1); transform: translate(-10px, 0px); }
-  100% { clip-path: var(--slice-1); transform: translate(0); }
-}
+    /* ============================================================
+       ORIENTATION PROMPT (dismissible, site still works in portrait)
+       ============================================================ */
+    #orientation-prompt {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-/* Navigation Styles */
-.nav {
-  position: fixed;
-  width: 300px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease;
-  transform: translateX(-100%);
-}
+    #orientation-prompt.show {
+      display: flex;
+    }
 
-.nav.open {
-  transform: translateX(0);
-}
+    .rotate-glyph {
+      width: 3.5rem;
+      height: 5.5rem;
+      border: 2px solid var(--cyan);
+      border-radius: 0.6rem;
+      box-shadow: 0 0 1rem rgba(0, 230, 246, 0.4);
+      animation: rotate-hint 2.4s ease-in-out infinite;
+      margin-bottom: 0.5rem;
+    }
 
-.nav a {
-  display: block;
-  padding: 10px;
-  color: #ffffff;
-  text-decoration: none;
-  margin-bottom: 10px;
-  transition: background 0.3s;
-}
+    #orientation-prompt p {
+      font-size: 1.05rem;
+      margin: 0;
+      max-width: 28rem;
+      line-height: 1.6;
+    }
 
-.nav a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
+    #orientation-prompt .prompt-note {
+      font-size: 0.85rem;
+      color: var(--dim);
+    }
 
-/* Hamburger Menu */
-.hamburger {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 30px;
-  height: 24px;
-  z-index: 101;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
+    #orientation-continue {
+      margin-top: 1.2rem;
+      padding: 0.7rem 1.6rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cyan-soft);
+      background: transparent;
+      border: 1px solid rgba(0, 230, 246, 0.45);
+      cursor: pointer;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
+    }
 
-.hamburger.open {
-  transform: translateX(300px);
-}
+    #orientation-continue:hover,
+    #orientation-continue:focus-visible {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0.8rem rgba(0, 230, 246, 0.35);
+      text-shadow: 0 0 0.5rem rgba(0, 230, 246, 0.8);
+      outline: none;
+    }
 
-.hamburger span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background-color: #ffffff;
-  margin: 6px 0;
-  transition: 0.3s;
-}
+    @keyframes rotate-hint {
+      0%, 20% { transform: rotate(0deg); }
+      55%, 80% { transform: rotate(90deg); }
+      100% { transform: rotate(90deg); }
+    }
 
-.hamburger:hover span {
-  background-color: #007BFF;
-}
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
 
-.social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 2rem 0;
-}
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
 
-#contact-section {
-  margin-top: 50vh;
-}
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .letter-span,
+      .tile-inner {
+        transition: none;
+      }
+      .rotate-glyph {
+        animation: none;
+      }
+    }
 
-/* Block the entire screen on mobile devices */
-#mobile-blocker {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0);
-  color: #fff;
-  text-align: center;
-  font-size: 1.5rem;
-  padding: 20px;
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
+    /* ============================================================
+       MOBILE / SMALL SCREENS
+       Switch from vw scaling to rem so text stays readable.
+       ============================================================ */
+    @media (max-width: 900px) {
+      p, h2, h3, .contact-message {
+        font-size: 1rem;
+        margin: 1rem 0;
+      }
 
-#mobile-blocker p {
-  margin: 20px 0;
-  font-size: 1.2rem;
-}
+      .section-title {
+        font-size: 2.1rem;
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.6rem;
+      }
 
-@media (max-width: 768px), (max-height: 600px) {
-  #mobile-blocker {
-    display: flex;
-  }
-}
+      .section-title::after {
+        width: 6rem;
+        height: 1px;
+        box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.8);
+      }
+
+      .section-sub {
+        font-size: 0.72rem;
+        margin-bottom: 2rem;
+      }
+
+      .full-screen {
+        width: 90%;
+        padding: 3rem 0;
+      }
+
+      #about-section,
+      #experience-section,
+      #projects-section,
+      #contact-section {
+        margin-top: 18vh;
+      }
+
+      #contact-section {
+        margin-bottom: 18vh;
+      }
+
+      .centered-box {
+        max-width: 100%;
+        padding: 1rem; /* a bit more breathing room now that the panel bg is visible */
+      }
+
+      .reveal {
+        transform: translateY(1.5rem);
+      }
+
+      .loading-contents {
+        width: 60vw;
+      }
+
+      .loading-text {
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .progress-container {
+        height: 3px;
+        margin: 0.8rem 0;
+      }
+
+      .btn {
+        padding: 0.8rem 1.8rem;
+        font-size: 0.78rem;
+        border-width: 1px;
+      }
+
+      .btn::before,
+      .btn::after {
+        width: 0.6rem;
+        height: 0.6rem;
+      }
+
+      .btn::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+      .btn::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+      .btn:hover::before,
+      .btn:hover::after {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .nav {
+        width: min(75vw, 300px);
+      }
+
+      /* About — small photo floated left, text wraps on the right
+         and flows full-width below the photo once it extends past it */
+      .about-grid {
+        display: block;
+        text-align: left;
+      }
+
+      /* contain the float so nothing after the grid is affected */
+      .about-grid::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+
+      .portrait-frame {
+        float: left;
+        width: min(32vw, 140px);
+        height: min(40vw, 170px);
+        margin: 0.3rem 1.1rem 0.6rem 0;
+      }
+
+      .portrait-frame::before {
+        inset: -0.35rem;
+        border-width: 1px;
+        box-shadow: 0 0 0.8rem rgba(0, 230, 246, 0.25);
+      }
+
+      .about-text {
+        text-align: left;
+      }
+
+      .skills-row {
+        gap: 0.5rem;
+        margin-top: 1rem;
+        justify-content: flex-start;
+      }
+
+      .tag {
+        font-size: 0.66rem;
+        padding: 0.3rem 0.6rem;
+        border-width: 1px;
+      }
+
+      /* Timeline */
+      .timeline {
+        padding-left: 2.2rem;
+      }
+
+      .timeline::before {
+        left: 0.4rem;
+        top: 0.6rem;
+        bottom: 0.6rem;
+        width: 1px;
+        box-shadow: 0 0 0.4rem rgba(0, 230, 246, 0.6);
+      }
+
+      .timeline-item {
+        padding-bottom: 2.5rem;
+      }
+
+      .timeline-item::before {
+        left: -2.12rem;
+        top: 0.35rem;
+        width: 0.65rem;
+        height: 0.65rem;
+        border-width: 1px;
+        box-shadow: 0 0 0.5rem var(--cyan), inset 0 0 0.25rem var(--cyan);
+      }
+
+      .timeline-date {
+        font-size: 0.72rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .timeline-item h3 {
+        font-size: 1.2rem;
+      }
+
+      .timeline-org {
+        font-size: 0.9rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .timeline-item p {
+        font-size: 0.95rem;
+        margin: 0.5rem 0;
+      }
+
+      .timeline-tags {
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+      }
+
+      /* Tiles */
+      .tile-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .tile {
+        height: 13rem;
+      }
+
+      .tile-face {
+        padding: 1.2rem;
+        border-width: 1px;
+      }
+
+      .tile-eyebrow {
+        font-size: 0.62rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .tile-title {
+        font-size: 1.25rem;
+      }
+
+      .tile-hint {
+        bottom: 0.9rem;
+        font-size: 0.6rem;
+      }
+
+      .tile-back {
+        padding: 1rem 1.2rem;
+      }
+
+      .tile-back-title {
+        font-size: 0.95rem;
+        padding-bottom: 0.5rem;
+        border-bottom-width: 1px;
+      }
+
+      .tile-desc {
+        font-size: 0.88rem;
+      }
+
+      .tile-link {
+        font-size: 0.7rem;
+        border-width: 1px;
+        padding: 0.5rem 1.1rem;
+      }
+
+      .resume-row {
+        margin-top: 2rem;
+        gap: 1rem;
+      }
+
+      .resume-row p {
+        font-size: 0.9rem;
+      }
+
+      /* Contact */
+      .contact-message {
+        max-width: 100%;
+      }
+
+      .contact-email {
+        font-size: 1.25rem;
+        border-bottom-width: 1px;
+        padding-bottom: 0.2rem;
+      }
+
+      .copy-email {
+        margin-top: 1.2rem;
+        font-size: 0.7rem;
+      }
+
+      .social-row {
+        gap: 1.6rem;
+        margin-top: 2.2rem;
+      }
+
+      .social-link {
+        width: 3.2rem;
+        height: 3.2rem;
+      }
+
+      .social-link::before {
+        border-width: 1px;
+      }
+
+      .social-name {
+        bottom: -1.4rem;
+        font-size: 0.6rem;
+      }
+    }
+
+    @media (min-width: 901px) and (max-width: 1100px) {
+      .tile-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tile {
+        height: 22vw;
+      }
+    }
   </style>
 </head>
 <body>
@@ -421,10 +1233,9 @@
     </div>
   </div>
 
-
   <canvas id="bg"></canvas>
 
-  <div class="hamburger" id="nav-toggle">
+  <div class="hamburger" id="nav-toggle" role="button" tabindex="0" aria-label="Toggle navigation" aria-expanded="false">
     <span></span>
     <span></span>
     <span></span>
@@ -433,6 +1244,7 @@
   <div class="nav" id="nav">
     <a href="#sphere-section">Home</a>
     <a href="#about-section">About Me</a>
+    <a href="#experience-section">Experience</a>
     <a href="#projects-section">Projects</a>
     <a href="#contact-section">Contact Me</a>
   </div>
@@ -442,67 +1254,234 @@
       <!-- Empty section for Three.js canvas -->
     </section>
 
+    <!-- ================= ABOUT ================= -->
     <section id="about-section" class="full-screen">
       <div class="centered-box">
-        <div class="section-title">About Me</div>
-        <p>
-          Hi, I'm <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Prabhanjana</span>, an undergraduate student at <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Christ University</span> pursuing a Bachelor's degree in <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Computer Science</span> and <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Statistics</span>.
-          My passions lie in <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Image Processing</span>, <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Geographic Information Systems (GIS)</span>, <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Machine Learning</span>, and <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Computational Graphics</span>.
-          I enjoy tackling complex problems and take pride in creating and technically refined projects.
-          Currently, I am working as a <span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Research Intern</span> with the Centre for AI at Christ University.
-        </p>
-      </div>
-    </section>
-
-    <section id="projects-section" class="full-screen">
-      <div class="centered-box">
-        <div class="section-title">Check Out My Stuff</div>
-        <div class="projects-grid">
-          <div class="project-info">
-            <h2><span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">ArtStation Portfolio</span></h2>
-            <p>Explore my 3D artwork created over five years using Blender, showcasing various styles and techniques.</p>
+        <div class="section-title reveal">About Me</div>
+        <div class="about-grid">
+          <div class="portrait-frame reveal reveal-delay-1">
+            <img src="img.jpg" alt="Portrait of G Prabhanjana" />
           </div>
-          <div class="project-button">
-            <a href="https://www.artstation.com/parallax2077" class="button" target="_blank" rel="noopener noreferrer">ArtStation</a>
-          </div>
-    
-          <div class="project-info">
-            <h2><span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">Medium Blog</span></h2>
-            <p>Read my insights and discoveries about technology, design, and creative processes.</p>
-          </div>
-          <div class="project-button">
-            <a href="https://medium.com/@ghurikiprabhanjana" class="button" target="_blank" rel="noopener noreferrer">Medium</a>
-          </div>
-    
-          <div class="project-info">
-            <h2><span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">GitHub Projects</span></h2>
-            <p>Check out my code repositories and technical projects.</p>
-          </div>
-          <div class="project-button">
-            <a href="https://github.com/GPrabhanjana" class="button" target="_blank" rel="noopener noreferrer">GitHub</a>
-          </div>
-    
-          <div class="project-info">
-            <h2><span style="color: #ff5f5f; text-shadow: 0 0 10px #ff6969;">My Resume</span></h2>
-            <p>Download my complete professional background and experience.</p>
-          </div>
-          <div class="project-button">
-            <a href="D:\portfolio\threejs-scroll-animation-demo\resume.pdf" class="button" target="_blank" rel="noopener noreferrer">Resume</a>
+          <div class="about-text reveal reveal-delay-2">
+            <p>
+              Hi, I'm <span class="hl">Prabhanjana</span>, a <span class="hl">Statistics</span> and <span class="hl">Computer Science</span> undergrad at <span class="hl">Christ University, Bangalore</span>. I gravitate toward problems where the data is messy and the structure has to be earned.
+            </p>
+            <p>
+              My areas of expertise include <span class="hl-cyan">machine learning</span>, <span class="hl-cyan">data engineering</span>, and <span class="hl-cyan">geospatial analysis</span>. I have built OCR and NLP pipelines, knowledge graphs, routing-based GIS systems, and developer tooling, and I publish research alongside the things I build.
+            </p>
+            <p>
+              Outside of data, I have spent five years making 3D art in Blender, which is where the visuals on this site come from.
+            </p>
+            <div class="skills-row">
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Data Engineering</span>
+              <span class="tag">Geospatial Analysis</span>
+              <span class="tag">Computer Vision</span>
+              <span class="tag">Statistical Modeling</span>
+              <span class="tag">3D Modelling</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
-    
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section id="experience-section" class="full-screen">
+      <div class="centered-box">
+        <div class="section-title reveal">Experience</div>
+        <p class="section-sub reveal">Where I've worked, most recent first</p>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <p class="timeline-date">Feb 2026 - Present</p>
+            <h3>AI Software Developer Intern</h3>
+            <p class="timeline-org">Health Infinity, Bengaluru</p>
+            <p>
+              Developing a document-understanding pipeline that reads <span class="hl-cyan">handwritten and printed prescriptions</span> and converts them into clean, structured data points.
+            </p>
+            <p>
+              Building a <span class="hl-cyan">knowledge graph</span> that integrates multiple medical ontologies with proprietary datasets, powering relevant-history lookup, symptom-based disease prediction, and other clinical use cases.
+            </p>
+            <div class="timeline-tags">
+              <span class="tag">Document AI</span>
+              <span class="tag">Knowledge Graphs</span>
+              <span class="tag">Ontologies</span>
+              <span class="tag">Disease Prediction</span>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <p class="timeline-date">Apr 2025 - Jul 2025</p>
+            <h3>Research Intern</h3>
+            <p class="timeline-org">Berlin School of Economics and Law (HWR Berlin)</p>
+            <p>
+              Turned unstructured <span class="hl-cyan">Indian Lok Sabha transcripts</span> into a structured, multilingual parliamentary corpus, tagging speeches with speakers, sessions, and rich metadata.
+            </p>
+            <p>
+              Built OCR workflows with boldness-based speaker and speech detection, multi-level error compensation for speaker classification, custom tabulation logic, and Levenshtein-distance error-correction pipelines.
+            </p>
+            <div class="timeline-tags">
+              <span class="tag">OCR Workflows</span>
+              <span class="tag">Speaker Classification</span>
+              <span class="tag">Levenshtein Correction</span>
+              <span class="tag">Multilingual Corpus</span>
+              <span class="tag">Metadata Processing</span>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <p class="timeline-date">May 2024 - Jun 2024</p>
+            <h3>Creative Technology Developer</h3>
+            <p class="timeline-org">Anuvrittiksha EdTech Pvt. Ltd., Bengaluru</p>
+            <p>
+              Scripted and animated solution-explainer videos for six LeetCode topics, wrote clean multi-approach reference code, and reviewed scripts and code for 12+ videos.
+            </p>
+            <p>
+              Collaborated across time zones with Scrum, Jira, and Confluence, and mentored incoming interns on scripting standards and content workflows.
+            </p>
+            <div class="timeline-tags">
+              <span class="tag">DSA Content</span>
+              <span class="tag">Animation</span>
+              <span class="tag">Code Review</span>
+              <span class="tag">Mentoring</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects-section" class="full-screen">
+      <div class="centered-box">
+        <div class="section-title reveal">Check Out My Stuff</div>
+        <p class="section-sub reveal">Flip a tile for details</p>
+
+        <div class="tile-grid">
+          <div class="tile reveal" tabindex="0" role="button" aria-expanded="false">
+            <div class="tile-inner">
+              <div class="tile-face tile-front">
+                <p class="tile-eyebrow">Geospatial Analytics</p>
+                <h3 class="tile-title">Bangalore Walkability Index</h3>
+                <span class="tile-hint">Flip for details</span>
+              </div>
+              <div class="tile-face tile-back">
+                <p class="tile-back-title">Walkability Index</p>
+                <p class="tile-desc">A live web app that scores Bangalore neighborhoods on personalized walkability.</p>
+                <a class="tile-link" href="https://bangalore-walkability-index.netlify.app/" target="_blank" rel="noopener noreferrer">Open the live app</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile reveal reveal-delay-1" tabindex="0" role="button" aria-expanded="false">
+            <div class="tile-inner">
+              <div class="tile-face tile-front">
+                <p class="tile-eyebrow">Web App</p>
+                <h3 class="tile-title">GeoQuiz</h3>
+                <span class="tile-hint">Flip for details</span>
+              </div>
+              <div class="tile-face tile-back">
+                <p class="tile-back-title">GeoQuiz</p>
+                <p class="tile-desc">An interactive geography quiz where you can practice and test yourself on countries and capitals.</p>
+                <a class="tile-link" href="https://geoquiz-by-prabhanjana.netlify.app/" target="_blank" rel="noopener noreferrer">Play GeoQuiz</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile reveal reveal-delay-2" tabindex="0" role="button" aria-expanded="false">
+            <div class="tile-inner">
+              <div class="tile-face tile-front">
+                <p class="tile-eyebrow">ML Tooling</p>
+                <h3 class="tile-title">VizGrad Autograd Engine</h3>
+                <span class="tile-hint">Flip for details</span>
+              </div>
+              <div class="tile-face tile-back">
+                <p class="tile-back-title">VizGrad</p>
+                <p class="tile-desc">A lightweight automatic-differentiation engine with built-in visualization for educational use.</p>
+                <a class="tile-link" href="https://pypi.org/project/vizgrad/" target="_blank" rel="noopener noreferrer">See it on PyPI</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile reveal" tabindex="0" role="button" aria-expanded="false">
+            <div class="tile-inner">
+              <div class="tile-face tile-front">
+                <p class="tile-eyebrow">Code</p>
+                <h3 class="tile-title">GitHub Projects</h3>
+                <span class="tile-hint">Flip for details</span>
+              </div>
+              <div class="tile-face tile-back">
+                <p class="tile-back-title">GitHub</p>
+                <p class="tile-desc">Repositories, experiments, and everything in between, from ML pipelines to this very website.</p>
+                <a class="tile-link" href="https://github.com/GPrabhanjana" target="_blank" rel="noopener noreferrer">Browse the code</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile reveal reveal-delay-1" tabindex="0" role="button" aria-expanded="false">
+            <div class="tile-inner">
+              <div class="tile-face tile-front">
+                <p class="tile-eyebrow">Writing</p>
+                <h3 class="tile-title">Medium Blog</h3>
+                <span class="tile-hint">Flip for details</span>
+              </div>
+              <div class="tile-face tile-back">
+                <p class="tile-back-title">Medium</p>
+                <p class="tile-desc">Essays and insights on technology, design, and creative processes.</p>
+                <a class="tile-link" href="https://medium.com/@ghurikiprabhanjana" target="_blank" rel="noopener noreferrer">Read the blog</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile reveal reveal-delay-2" tabindex="0" role="button" aria-expanded="false">
+            <div class="tile-inner">
+              <div class="tile-face tile-front">
+                <p class="tile-eyebrow">3D Art</p>
+                <h3 class="tile-title">ArtStation Portfolio</h3>
+                <span class="tile-hint">Flip for details</span>
+              </div>
+              <div class="tile-face tile-back">
+                <p class="tile-back-title">ArtStation</p>
+                <p class="tile-desc">Five years of 3D artwork created in Blender, across a range of styles and techniques.</p>
+                <a class="tile-link" href="https://www.artstation.com/parallax2077" target="_blank" rel="noopener noreferrer">View the gallery</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="resume-row reveal">
+          <p>Want the full picture?</p>
+          <a href="./resume.pdf" class="btn" target="_blank" rel="noopener noreferrer">Download Resume</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
     <section id="contact-section" class="full-screen">
       <div class="centered-box">
-        <div class="section-title">Contact Me</div>
-        
-        <p class="contact-message">I'd love to hear from you! Whether you have a question, a project idea, or just want to say hi, feel free to reach out.</p>
-        
-        <div class="social-buttons">
-          <a href="https://www.instagram.com/prabhanjana__/" target="_blank" rel="noopener noreferrer" class="button large">Instagram</a>
-          <a href="https://www.linkedin.com/in/prabhanjana-ghuriki-181429284/" target="_blank" rel="noopener noreferrer" class="button large">LinkedIn</a>
-          <a href="mailto:ghurikiprabhanjana@gmail.com" target="_blank" rel="noopener noreferrer" class="button large">Gmail</a>
+        <div class="section-title reveal">Contact Me</div>
+
+        <p class="contact-message reveal reveal-delay-1">Have a question, a project idea, or just want to say hi? My inbox is open.</p>
+
+        <div class="reveal reveal-delay-2">
+          <a class="contact-email" href="mailto:ghurikiprabhanjana@gmail.com">ghurikiprabhanjana@gmail.com</a>
+          <div>
+            <button class="btn copy-email" id="copy-email" type="button" data-email="ghurikiprabhanjana@gmail.com">Copy Email</button>
+          </div>
+        </div>
+
+        <div class="social-row reveal reveal-delay-3">
+          <a class="social-link" href="https://www.linkedin.com/in/prabhanjana-ghuriki-181429284/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            <span class="social-name">LinkedIn</span>
+          </a>
+          <a class="social-link" href="https://github.com/GPrabhanjana" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.27 5.67.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.2.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            <span class="social-name">GitHub</span>
+          </a>
+          <a class="social-link" href="https://www.researchgate.net/profile/Prabhanjana-Ghuriki" target="_blank" rel="noopener noreferrer" aria-label="ResearchGate">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="16.5" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="currentColor">RG</text></svg>
+            <span class="social-name">ResearchGate</span>
+          </a>
         </div>
       </div>
     </section>
@@ -511,104 +1490,288 @@
       <!-- Empty section for Three.js canvas -->
     </section>
 
-    <div id="mobile-blocker">
-      <p>Oops! This website isn’t quite ready for mobile devices yet.</p>
-      <p>For the best experience, please visit us on a desktop. Apologies for the hassle :[</p>
+    <div id="orientation-prompt">
+      <div class="rotate-glyph"></div>
+      <p>Please rotate your phone</p>
+      <p class="prompt-note">This site looks best in landscape.</p>
+      <button id="orientation-continue" type="button">Continue anyway</button>
     </div>
-    
+
   </main>
 
-  <script type="module" src="main.js"></script>
+  <script>
+    /* ============================================================
+       PORTRAIT FIX (HTML-only, no changes to main.js)
+       The Three.js code uses a fixed vertical FOV, so in portrait the
+       horizontal field of view collapses and the background text gets
+       clipped. Three coordinated tricks, all before the bundle runs:
+
+       1. Spoof window.innerWidth to innerHeight * MIN_ASPECT in
+          portrait, so the scene renders at its designed landscape
+          framing (full-width name, thank-you text, etc).
+       2. Scale the oversized canvas DOWN uniformly so the whole
+          landscape frame fits the screen width, centered vertically
+          (zoomed out, not cropped — black letterbox blends with the
+          black page background).
+       3. Remap Touch clientX/clientY into render coordinates, since
+          main.js normalizes touches against the spoofed innerWidth
+          assuming the canvas fills the screen. This keeps the touch
+          ripple/sphere interactions accurate in portrait.
+       ============================================================ */
+    (function () {
+      var MIN_ASPECT = 16 / 9; // landscape shape the scene was designed for
+
+      var wDesc = Object.getOwnPropertyDescriptor(window, 'innerWidth');
+      var realW = (wDesc && wDesc.get)
+        ? wDesc.get.bind(window)
+        : function () { return document.documentElement.clientWidth; };
+
+      function isNarrow() { return realW() / window.innerHeight < MIN_ASPECT; }
+      function virtualW() { return Math.round(window.innerHeight * MIN_ASPECT); }
+      function scaleFactor() { return realW() / virtualW(); }
+
+      /* 1 — virtual landscape width for the renderer/camera */
+      Object.defineProperty(window, 'innerWidth', {
+        configurable: true,
+        get: function () { return isNarrow() ? virtualW() : realW(); }
+      });
+
+      /* 2 — shrink the canvas so the full landscape frame fits on screen */
+      function fitCanvas() {
+        var c = document.getElementById('bg');
+        if (!c) return;
+        if (isNarrow()) {
+          c.style.top = '50%';
+          c.style.left = '50%';
+          c.style.transform = 'translate(-50%, -50%) scale(' + scaleFactor() + ')';
+        } else {
+          c.style.top = '';
+          c.style.left = '';
+          c.style.transform = '';
+        }
+      }
+      window.addEventListener('resize', fitCanvas);
+      window.addEventListener('orientationchange', fitCanvas);
+      document.addEventListener('DOMContentLoaded', fitCanvas);
+      fitCanvas();
+
+      /* 3 — map real screen touch coords into render coords */
+      function toRenderX(x) {
+        if (!isNarrow()) return x;
+        return (x - realW() / 2) / scaleFactor() + virtualW() / 2;
+      }
+      function toRenderY(y) {
+        if (!isNarrow()) return y;
+        var h = window.innerHeight;
+        return (y - h / 2) / scaleFactor() + h / 2;
+      }
+      if (window.Touch && Touch.prototype) {
+        var xd = Object.getOwnPropertyDescriptor(Touch.prototype, 'clientX');
+        var yd = Object.getOwnPropertyDescriptor(Touch.prototype, 'clientY');
+        if (xd && xd.get && yd && yd.get) {
+          Object.defineProperty(Touch.prototype, 'clientX', {
+            configurable: true,
+            get: function () { return toRenderX(xd.get.call(this)); }
+          });
+          Object.defineProperty(Touch.prototype, 'clientY', {
+            configurable: true,
+            get: function () { return toRenderY(yd.get.call(this)); }
+          });
+        }
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="./assets/index-E4Op9Pz7.js"></script>
   <script>
     // Initialize scroll and history settings
     window.onload = () => window.scrollTo(0, 0);
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  
-    // Navigation handling
+
+    // ===================== Navigation =====================
     const navToggle = document.getElementById('nav-toggle');
     const nav = document.getElementById('nav');
-  
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-      navToggle.classList.toggle('open');
+
+    function setNav(open) {
+      nav.classList.toggle('open', open);
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+    }
+
+    navToggle.addEventListener('click', () => setNav(!nav.classList.contains('open')));
+    navToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setNav(!nav.classList.contains('open'));
+      }
     });
-  
+
+    // close when clicking outside the menu
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !navToggle.contains(e.target)) {
+        setNav(false);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) setNav(false);
+    });
+
     document.querySelectorAll('.nav a').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         const targetSection = document.querySelector(targetId);
-        
+
         const title = targetSection.querySelector('.section-title');
         if (title) {
           title.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
           targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        
-        nav.classList.remove('open');
-        navToggle.classList.remove('open');
+
+        setNav(false);
       });
     });
-  
-    // Position-aware text effect
+
+    // ===================== Project tiles =====================
+    document.querySelectorAll('.tile').forEach(tile => {
+      const toggle = () => {
+        const flipped = tile.classList.toggle('flipped');
+        tile.setAttribute('aria-expanded', flipped);
+      };
+
+      tile.addEventListener('click', (e) => {
+        // clicking the link should follow it, not unflip the tile
+        if (e.target.closest('.tile-link')) return;
+        toggle();
+      });
+
+      tile.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          if (e.target.closest('.tile-link')) return;
+          e.preventDefault();
+          toggle();
+        }
+      });
+    });
+
+    // ===================== Copy email =====================
+    const copyBtn = document.getElementById('copy-email');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const email = copyBtn.dataset.email;
+        try {
+          await navigator.clipboard.writeText(email);
+        } catch (err) {
+          const ta = document.createElement('textarea');
+          ta.value = email;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        const original = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.textContent = original; }, 1800);
+      });
+    }
+
+    // ===================== Scroll reveal =====================
+    // Opacity + transform only. The page height never changes,
+    // so the Three.js scroll mapping is unaffected.
     document.addEventListener('DOMContentLoaded', function() {
-      const textElements = document.querySelectorAll('.section-title, p:not(.button *), h2:not(.button *), .project-info p:not(.button *), .contact-message:not(.button *)');
+      const revealEls = document.querySelectorAll('.reveal');
+
+      if (!('IntersectionObserver' in window)) {
+        revealEls.forEach(el => el.classList.add('visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+
+      revealEls.forEach(el => observer.observe(el));
+    });
+
+    // ===================== Position-aware text effect =====================
+    document.addEventListener('DOMContentLoaded', function() {
+      const textElements = document.querySelectorAll(
+        '.section-title, ' +
+        '.about-text p, ' +
+        '.timeline-item h3, .timeline-item p:not(.timeline-date):not(.timeline-org), ' +
+        '.contact-message'
+      );
       const activeLetters = new Set();
       let cachedLetters = null;
-      
+
       textElements.forEach(element => {
         const originalHtml = element.innerHTML;
         const temp = document.createElement('div');
         temp.innerHTML = originalHtml;
-        
+
         function processNode(node) {
-          if (node.nodeType === 3) {
+          if (node.nodeType === 3) { // Text node
             const fragment = document.createDocumentFragment();
-            node.textContent.split('').forEach(letter => {
-              if (letter.trim() === '') {
-                fragment.appendChild(document.createTextNode(' '));
+            node.textContent.split(/(\s+)/).forEach(word => {
+              if (word.trim() === '') {
+                fragment.appendChild(document.createTextNode(word));
                 return;
               }
-              const span = document.createElement('span');
-              span.textContent = letter;
-              span.className = 'letter-span';
-              fragment.appendChild(span);
+              const wordSpan = document.createElement('span');
+              wordSpan.className = 'word-span';
+              wordSpan.style.display = 'inline-block';
+
+              word.split('').forEach(letter => {
+                const letterSpan = document.createElement('span');
+                letterSpan.textContent = letter;
+                letterSpan.className = 'letter-span';
+                wordSpan.appendChild(letterSpan);
+              });
+
+              fragment.appendChild(wordSpan);
             });
             node.parentNode.replaceChild(fragment, node);
           } else {
             Array.from(node.childNodes).forEach(processNode);
           }
         }
-        
+
         processNode(temp);
         element.innerHTML = temp.innerHTML;
       });
-  
+
       let rafId = null;
       let lastMouseX = 0;
       let lastMouseY = 0;
-      
+
       const updateLetters = (mouseX, mouseY) => {
         if (!cachedLetters) {
           cachedLetters = Array.from(document.querySelectorAll('.letter-span'));
         }
-        
+
         const viewportHeight = window.innerHeight;
         const viewportWidth = window.innerWidth;
-        
+
         activeLetters.forEach(letter => letter.classList.remove('active'));
         activeLetters.clear();
-        
+
         for (let i = 0; i < cachedLetters.length; i++) {
           const letter = cachedLetters[i];
           const rect = letter.getBoundingClientRect();
-          
-          if (rect.top < viewportHeight && rect.bottom > 0 && 
+
+          if (rect.top < viewportHeight && rect.bottom > 0 &&
               rect.left < viewportWidth && rect.right > 0) {
             const dx = mouseX - (rect.left + rect.width / 2);
             const dy = mouseY - (rect.top + rect.height / 2);
-            
+
             if ((dx * dx + dy * dy) < 3600) {
               letter.classList.add('active');
               activeLetters.add(letter);
@@ -616,30 +1779,30 @@
           }
         }
       };
-  
+
       const onMouseMove = (e) => {
         const movementX = Math.abs(e.clientX - lastMouseX);
         const movementY = Math.abs(e.clientY - lastMouseY);
-        
+
         if (movementX > 2 || movementY > 2) {
           lastMouseX = e.clientX;
           lastMouseY = e.clientY;
-          
+
           cancelAnimationFrame(rafId);
           rafId = requestAnimationFrame(() => updateLetters(lastMouseX, lastMouseY));
         }
       };
-  
+
       document.addEventListener('mousemove', onMouseMove, { passive: true });
       document.addEventListener('scroll', () => { cachedLetters = null; }, { passive: true });
       window.addEventListener('resize', () => { cachedLetters = null; }, { passive: true });
     });
-  
-    // Loading screen handling
+
+    // ===================== Loading screen =====================
     document.body.style.overflow = 'hidden';
     let resourcesLoaded = 0;
     const totalResources = 4;
-  
+
     function updateProgress() {
       resourcesLoaded++;
       const progress = Math.min((resourcesLoaded / totalResources) * 100, 100);
@@ -648,53 +1811,46 @@
         progressBar.style.width = `${progress}%`;
       }
     }
-  
+
     document.addEventListener('DOMContentLoaded', updateProgress);
     window.addEventListener('load', function() {
       const loadingScreen = document.getElementById('loading-screen');
       const progressBar = document.querySelector('.progress-bar');
-      
+
       progressBar.style.width = '100%';
-      
+
       setTimeout(() => {
         loadingScreen.style.opacity = '0';
         document.body.style.overflow = '';
-        
+
         setTimeout(() => {
           loadingScreen.style.display = 'none';
         }, 500);
       }, 800);
     });
-  
-    // Mobile blocker
-    function checkMobileBlock() {
-      const mobileBlocker = document.getElementById('mobile-blocker');
-      
-      // Primary check using screen orientation API
-      if (typeof screen.orientation !== 'undefined') {
-        // Check if device is mobile based on orientation capabilities
-        const isMobileDevice = screen.orientation.type.includes('portrait') || 
-                              screen.orientation.type.includes('landscape');
-        
-        // Additional check for small viewport sizes
-        const isSmallScreen = window.innerWidth <= 768 || window.innerHeight <= 400;
-        
-        mobileBlocker.style.display = (isMobileDevice && isSmallScreen) ? 'flex' : 'none';
-      } else {
-        // Fallback for browsers that don't support screen.orientation
-        const isSmallScreen = window.innerWidth <= 768 || window.innerHeight <= 400;
-        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        mobileBlocker.style.display = (isMobileDevice || isSmallScreen) ? 'flex' : 'none';
-      }
+
+    // ===================== Orientation prompt =====================
+    // Shows an opaque overlay on mobile portrait; it disappears
+    // automatically once the device is rotated to landscape, or when
+    // the user taps "Continue anyway" (stays dismissed afterwards).
+    const orientationPrompt = document.getElementById('orientation-prompt');
+    const orientationContinue = document.getElementById('orientation-continue');
+    let orientationDismissed = false;
+
+    function checkOrientationPrompt() {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+      orientationPrompt.classList.toggle('show', isMobile && isPortrait && !orientationDismissed);
     }
-    
-    // Event listeners
-    window.addEventListener('resize', checkMobileBlock);
-    window.addEventListener('orientationchange', checkMobileBlock);
-    
-    // Initial check
-    checkMobileBlock();
+
+    orientationContinue.addEventListener('click', () => {
+      orientationDismissed = true;
+      orientationPrompt.classList.remove('show');
+    });
+
+    window.addEventListener('resize', checkOrientationPrompt);
+    window.addEventListener('orientationchange', checkOrientationPrompt);
+    checkOrientationPrompt();
   </script>
 </body>
 </html>
